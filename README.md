@@ -1,2 +1,2 @@
-# dotma-apepi
-omegalul omegalul omegalul omegalul
+# DOTMA-API
+API for accessing DOTMA Resources and Services.
