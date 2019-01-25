@@ -12,6 +12,6 @@ export default class DotmaAPI<T> {
 
     public getData(): T {
         //
-        return "temp" as unknown as T;
+        return "temp" as any as T;
     }
 }

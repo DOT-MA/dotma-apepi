@@ -28,7 +28,6 @@ app.use("/", index);
 app.use("/resourceApi", resourceApi);
 app.use("/externalApi", externalApi);
 
-
 if (process.env.NODE_ENV !== "test") {
     app.use(logger("dev"));
 }
