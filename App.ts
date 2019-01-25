@@ -1,48 +1,55 @@
 import * as express from "express";
-import * as request from "request";
+import * as path from "path";
 import * as bodyParser from "body-parser";
+import * as logger from "morgan";
 
-import {ContentRetrival} from "ContentRetrival";
+// // Setting up body parser for parsing json
+// app.use(bodyParser.urlencoded({"extended":true})); // parse application/x-www-form-urlencoded
+// app.use(bodyParser.json()); // parse application/json
+
+// app.get("/oopsie", async (req, res) => {
+//     const url = await ContentRetrival.getRandomImage();
+//     console.log(url);
+//     res.status(200).send("<img src="" + url +"" />");
+// });
+
+import { router as index } from "routes/index";
+import { router as resourceApi } from "routes/resourceApi";
+import { router as externalApi } from "routes/externalApi";
+
+const app = express();
+
+// middleware setup
+app.use(express.static(__dirname + "/public"));
+app.use("/node_modules", express.static(__dirname + "/node_modules"));
+app.use("/test", express.static(__dirname + "/public"));
+
+app.use("/", index);
+app.use("/resourceApi", resourceApi);
+app.use("/externalApi", externalApi);
 
 
-const main = async() =>  {
-    // Listen on provided port for requests
-    const PORT = 5000;
-    const app = express();
+if (process.env.NODE_ENV !== "test") {
+    app.use(logger("dev"));
+}
 
-    // // Setting up body parser for parsing json
-    // app.use(bodyParser.urlencoded({'extended':true})); // parse application/x-www-form-urlencoded
-    // app.use(bodyParser.json()); // parse application/json
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "public")));
 
-    app.get('/oopsie', async (req, res) => {
-        let url = await ContentRetrival.getRandomImage();
-        console.log(url);
-        res.status(200).send("<img src='" + url +"' />");
-    });
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+    const err: any = new Error("Not Found");
+    err.status = 404;
+    next(err);
+});
 
-    app.get('/test', (req, res) => {
-        let url = "https://raikou1.donmai.us/55/2e/552e74406af8a2b6b8b7fd547bc2c353.jpg"
-        res.status(200).send("<img src='" + url +"' />");
-    });
+// error handler
+app.use((err, req, res, next) => {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get("env") === "development" ? err : {};
+    res.status(err.status || 500);
+});
 
-    app.get('/sound', (req, res) => {
-        request.get(
-            {
-                url: "https://raw.githubusercontent.com/DOT-MA/dotma-resources/master/sounds/tony/semicircle.mp3",
-                headers: {
-                    //g: true,
-                },
-            },
-            (err, result, body) => {
-        
-            res.setHeader('Content-Type', 'audio/mpeg');
-            res.status(200).send(result);
-        });
-    });
-
-    app.listen(PORT, () => {
-        console.log(`server running on port ${PORT}`)
-    });
-};
-
-main();
+export default app;

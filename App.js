@@ -1,31 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
-const request = require("request");
-const ContentRetrival_1 = require("ContentRetrival");
-const main = async () => {
-    const PORT = 5000;
-    const app = express();
-    app.get('/oopsie', async (req, res) => {
-        let url = await ContentRetrival_1.ContentRetrival.getRandomImage();
-        console.log(url);
-        res.status(200).send("<img src='" + url + "' />");
-    });
-    app.get('/test', (req, res) => {
-        let url = "https://raikou1.donmai.us/55/2e/552e74406af8a2b6b8b7fd547bc2c353.jpg";
-        res.status(200).send("<img src='" + url + "' />");
-    });
-    app.get('/sound', (req, res) => {
-        request.get({
-            url: "https://raw.githubusercontent.com/DOT-MA/dotma-resources/master/sounds/tony/semicircle.mp3",
-            headers: {},
-        }, (err, result, body) => {
-            res.setHeader('Content-Type', 'audio/mpeg');
-            res.status(200).send(result);
-        });
-    });
-    app.listen(PORT, () => {
-        console.log(`server running on port ${PORT}`);
-    });
-};
-main();
+const path = require("path");
+const bodyParser = require("body-parser");
+const logger = require("morgan");
+const index_1 = require("routes/index");
+const resourceApi_1 = require("routes/resourceApi");
+const externalApi_1 = require("routes/externalApi");
+const app = express();
+app.use(express.static(__dirname + "/public"));
+app.use("/node_modules", express.static(__dirname + "/node_modules"));
+app.use("/test", express.static(__dirname + "/public"));
+app.use("/", index_1.router);
+app.use("/resourceApi", resourceApi_1.router);
+app.use("/externalApi", externalApi_1.router);
+if (process.env.NODE_ENV !== "test") {
+    app.use(logger("dev"));
+}
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "public")));
+app.use((req, res, next) => {
+    const err = new Error("Not Found");
+    err.status = 404;
+    next(err);
+});
+app.use((err, req, res, next) => {
+    res.locals.message = err.message;
+    res.locals.error = req.app.get("env") === "development" ? err : {};
+    res.status(err.status || 500);
+});
+exports.default = app;

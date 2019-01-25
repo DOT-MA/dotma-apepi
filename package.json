@@ -1,6 +1,6 @@
 {
   "name": "dotma-api",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "API for DOTMA services and resources",
   "keywords": [
     "api",
@@ -27,15 +27,22 @@
   "bin": {},
   "scripts": {
     "tsc": "tsc",
-    "start": "cross-env NODE_ENV=PRODUCTION NODE_PATH=./src node ./src/App.js",
-    "start-dev": "cross-env NODE_ENV=DEVELOPMENT NODE_PATH=./src node ./src/App.js",
+    "start": "cross-env NODE_ENV=PRODUCTION NODE_PATH=./ node ./src/App.js",
+    "start-dev": "cross-env NODE_ENV=DEVELOPMENT NODE_PATH=./ node ./src/App.js",
     "start-hot": "nodemon --exec npm run start-dev"
   },
   "dependencies": {
+    "@types/express": "^4.16.1",
+    "@types/request": "^2.48.1",
+    "body-parser": "^1.18.3",
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7",
     "request": "^2.88.0",
     "typescript": "^3.2.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/node": "^10.12.18"
+  }
 }
