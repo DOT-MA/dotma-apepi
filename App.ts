@@ -3,6 +3,8 @@ import * as path from "path";
 import * as bodyParser from "body-parser";
 import * as logger from "morgan";
 
+// Might move the server component to a new repo.
+
 // // Setting up body parser for parsing json
 // app.use(bodyParser.urlencoded({"extended":true})); // parse application/x-www-form-urlencoded
 // app.use(bodyParser.json()); // parse application/json
@@ -14,10 +16,13 @@ import * as logger from "morgan";
 // });
 
 import { router as index } from "routes/index";
-import { router as resourceApi } from "routes/resourceApi";
 import { router as externalApi } from "routes/externalApi";
 
+import DotmaResourcesAPI from "src/DotmaResourcesAPI";
+
 const app = express();
+
+const dotmaResourcesAPI = new DotmaResourcesAPI();
 
 // middleware setup
 app.use(express.static(__dirname + "/public"));
@@ -25,7 +30,7 @@ app.use("/node_modules", express.static(__dirname + "/node_modules"));
 app.use("/test", express.static(__dirname + "/public"));
 
 app.use("/", index);
-app.use("/resourceApi", resourceApi);
+app.use("/resourceApi", dotmaResourcesAPI.getRouter());
 app.use("/externalApi", externalApi);
 
 if (process.env.NODE_ENV !== "test") {

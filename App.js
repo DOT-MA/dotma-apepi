@@ -5,14 +5,15 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const index_1 = require("routes/index");
-const resourceApi_1 = require("routes/resourceApi");
 const externalApi_1 = require("routes/externalApi");
+const DotmaResourcesAPI_1 = require("src/DotmaResourcesAPI");
 const app = express();
+const dotmaResourcesAPI = new DotmaResourcesAPI_1.default();
 app.use(express.static(__dirname + "/public"));
 app.use("/node_modules", express.static(__dirname + "/node_modules"));
 app.use("/test", express.static(__dirname + "/public"));
 app.use("/", index_1.router);
-app.use("/resourceApi", resourceApi_1.router);
+app.use("/resourceApi", dotmaResourcesAPI.getRouter());
 app.use("/externalApi", externalApi_1.router);
 if (process.env.NODE_ENV !== "test") {
     app.use(logger("dev"));
