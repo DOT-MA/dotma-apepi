@@ -1,19 +1,41 @@
 {
-  "name": "api",
+  "name": "dotma-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "API for DOTMA services and resources",
+  "keywords": [
+    "api",
+    "dotma",
+    "fun"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DOT-MA/dotma-api"
+  },
+  "homepage": "https://github.com/DOT-MA/dotma-api",
+  "bugs": "https://github.com/DOT-MA/dotma-api/issues",
+  "licenses": [
+    "GPL-3.0"
+  ],
+  "author": {
+    "name": "DOTMA"
+  },
+  "contributors": [],
+  "main": "dotma-api",
+  "engines": {
+    "node": "10.4.0"
+  },
+  "bin": {},
   "scripts": {
     "tsc": "tsc",
     "start": "cross-env NODE_ENV=PRODUCTION NODE_PATH=./src node ./src/App.js",
     "start-dev": "cross-env NODE_ENV=DEVELOPMENT NODE_PATH=./src node ./src/App.js",
     "start-hot": "nodemon --exec npm run start-dev"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "typescript": "^3.2.4"
   },
   "devDependencies": {}
 }
