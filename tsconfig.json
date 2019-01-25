@@ -5,6 +5,8 @@
       "moduleResolution": "node",
       "rootDir": "./",
       "baseUrl": "./",
+      "declaration": true,
+      "outDir": "dist",
       "allowSyntheticDefaultImports": true,
       "noImplicitAny": false,
       "removeComments": true,

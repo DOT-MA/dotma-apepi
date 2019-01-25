@@ -13,9 +13,7 @@
   },
   "homepage": "https://github.com/DOT-MA/dotma-api",
   "bugs": "https://github.com/DOT-MA/dotma-api/issues",
-  "licenses": [
-    "GPL-3.0"
-  ],
+  "license": "GPL-3.0",
   "author": {
     "name": "DOTMA"
   },
