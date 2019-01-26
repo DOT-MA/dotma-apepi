@@ -1,6 +1,6 @@
 {
   "name": "dotma-api",
-  "version": "1.4.0-beta.0",
+  "version": "1.4.2-beta.0",
   "description": "API for DOTMA services and resources",
   "keywords": [
     "api",
@@ -28,12 +28,13 @@
     "tsc": "tsc",
     "build": "npm run tsc",
     "prepublishOnly": "npm run build",
-    "test": "npm run build && cross-env NODE_ENV=TEST NODE_PATH=./ mocha dist/src/test/**/*.js --exit"
+    "test": "ts-mocha test/**/*.ts --timeout 20000 --exit"
   },
   "dependencies": {
     "cross-env": "^5.2.0",
     "path": "^0.12.7",
     "request": "^2.88.0",
+    "request-promise": "^4.2.2",
     "typescript": "^3.2.4"
   },
   "devDependencies": {
@@ -41,7 +42,10 @@
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.12.18",
     "@types/request": "^2.48.1",
+    "@types/request-promise": "^4.1.42",
     "chai": "^4.2.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "ts-mocha": "^2.0.0",
+    "ts-node": "^8.0.2"
   }
 }

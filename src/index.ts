@@ -1,2 +1,2 @@
 export { Globals } from "./globals";
-export { DotmaResourcesApi } from "./api/DotmaResourcesApi";
+export { ResourcesApi } from "./api/ResourcesApi";
